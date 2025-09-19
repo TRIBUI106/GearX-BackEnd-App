@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.mapstruct.MappingTarget;
 
-import go_phone.common.response.PageResponse;
+import com.gearx.common.response.PageResponse;
 
 /**
  * @param <REQ> Request DTO (create/update)

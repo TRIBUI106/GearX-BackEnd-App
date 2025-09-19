@@ -3,7 +3,7 @@ package com.gearx.common.response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import go_phone.common.exception.ErrorCode;
+import com.gearx.common.exception.ErrorCode;
 
 public class ResponseHandler {
     private ResponseHandler() {}

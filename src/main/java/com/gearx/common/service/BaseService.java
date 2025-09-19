@@ -2,7 +2,7 @@ package com.gearx.common.service;
 
 import java.util.List;
 
-import go_phone.common.response.PageResponse;
+import com.gearx.common.response.PageResponse;
 
 /**
  * @param <REQ> Request DTO (create/update)

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import go_phone.common.exception.ErrorCode;
+import com.gearx.common.exception.ErrorCode;
 
 public class ResponseWriter {
 

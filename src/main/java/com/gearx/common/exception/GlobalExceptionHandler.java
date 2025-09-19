@@ -10,8 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import go_phone.common.response.ApiResponse;
-import go_phone.common.response.ResponseHandler;
+import com.gearx.common.response.ApiResponse;
+import com.gearx.common.response.ResponseHandler;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

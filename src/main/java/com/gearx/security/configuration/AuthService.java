@@ -64,7 +64,7 @@ public class AuthService {
             throw new AppException(ErrorCode.INTERNAL_ERROR);
         }
 
-        var role = roleMapper.findByCode("admin");
+        var role = roleMapper.findByCode("customer");
         roleMapper.insertUserRole(user.getUserId(), role.getRoleId());
 
         return rows;

@@ -65,14 +65,14 @@
         SELECT COUNT(1)
         FROM public."user"
         WHERE username = #{username}
-        AND is_deleted = false
+        AND is_deleted = 0
     </select>
 
     <select id="existsByEmail" parameterType="string" resultType="int">
         SELECT COUNT(1)
         FROM public."user" u
         WHERE u.email = #{email}
-        AND u.is_deleted = false
+        AND u.is_deleted = 0
     </select>
 
     <insert id="insert" parameterType="com.gearx.security.entity.User" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
@@ -101,7 +101,7 @@
         CURRENT_TIMESTAMP,
         #{updatedBy},
         #{isActive},
-        #{isDeleted}
+        0
         )
         RETURNING user_id
     </insert>

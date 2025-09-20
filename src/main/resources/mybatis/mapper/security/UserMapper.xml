@@ -6,13 +6,13 @@
 <mapper namespace="com.gearx.security.mapper.UserMapper">
 
     <resultMap id="UserResult" type="com.gearx.security.entity.User">
-        <id property="id"           column="id"/>
-        <result property="username" column="username"/>
-        <result property="email"    column="email"/>
-        <result property="password" column="password"/>
-        <result property="fullName" column="full_name"/>
-        <result property="phone"    column="phone"/>
-        <result property="address"  column="address"/>
+        <id     property="userId"    column="user_id"/>
+        <result property="username"  column="username"/>
+        <result property="email"     column="email"/>
+        <result property="password"  column="password"/>
+        <result property="fullName"  column="full_name"/>
+        <result property="phone"     column="phone"/>
+        <result property="address"   column="address"/>
         <result property="createdAt" column="created_at"/>
         <result property="createdBy" column="created_by"/>
         <result property="updatedAt" column="updated_at"/>
@@ -23,67 +23,73 @@
 
     <select id="findByUsername" parameterType="string" resultMap="UserResult">
         SELECT
-        id,
+        user_id,
         username,
         email,
         password,
         full_name,
         phone,
         address,
-        deleted_at,
         created_at,
+        created_by,
         updated_at,
-        is_active
-        FROM public.user
+        updated_by,
+        is_active,
+        is_deleted
+        FROM public."user"
         WHERE username = #{username}
         FETCH FIRST 1 ROWS ONLY
     </select>
 
     <select id="findByEmail" parameterType="string" resultMap="UserResult">
         SELECT
-        id,
+        user_id,
         username,
         email,
         password,
         full_name,
         phone,
         address,
-        deleted_at,
         created_at,
+        created_by,
         updated_at,
-        is_active
-        FROM public.user
+        updated_by,
+        is_active,
+        is_deleted
+        FROM public."user"
         WHERE email = #{email}
         FETCH FIRST 1 ROWS ONLY
     </select>
 
     <select id="existsByUsername" parameterType="string" resultType="int">
         SELECT COUNT(1)
-        FROM public.user
+        FROM public."user"
         WHERE username = #{username}
+        AND is_deleted = false
     </select>
 
     <select id="existsByEmail" parameterType="string" resultType="int">
         SELECT COUNT(1)
-        FROM public.user u
+        FROM public."user" u
         WHERE u.email = #{email}
+        AND u.is_deleted = false
     </select>
 
-    <insert id="insert" parameterType="com.gearx.security.entity.User"
-            useGeneratedKeys="true" keyProperty="userId" keyColumn="id">
-        INSERT INTO public.user (
+    <insert id="insert" parameterType="com.gearx.security.entity.User" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
+        INSERT INTO public."user" (
         username,
         email,
         password,
         full_name,
         phone,
         address,
-        deleted_at,
         created_at,
+        created_by,
         updated_at,
-        is_active
-        )
-        VALUES (
+        updated_by,
+        is_active,
+        is_deleted
+        ) VALUES (
         #{username},
         #{email},
         #{password},
@@ -91,17 +97,21 @@
         #{phone},
         #{address},
         CURRENT_TIMESTAMP,
-        #{createdAt},
-        #{updatedAt},
-        #{isActive}
+        #{createdBy},
+        CURRENT_TIMESTAMP,
+        #{updatedBy},
+        #{isActive},
+        #{isDeleted}
         )
+        RETURNING user_id
     </insert>
 
     <update id="updatePasswordById">
-        UPDATE public.user
-        SET password = #{password},
-        updated_at = CURRENT_TIMESTAMP
-        WHERE id = #{id}
+        UPDATE public."user"
+        SET password   = #{password},
+        updated_at = CURRENT_TIMESTAMP,
+        updated_by = #{updatedBy}
+        WHERE user_id = #{userId}
     </update>
 
 </mapper>

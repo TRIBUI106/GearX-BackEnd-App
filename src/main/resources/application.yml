@@ -13,6 +13,28 @@ spring:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      timeout: 60000
+  mail:
+    host: ${SMTP_HOST}
+    port: ${SMTP_PORT}
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 5000
+      mail.smtp.writetimeout: 5000
+  jackson:
+    time-zone: Asia/Ho_Chi_Minh
 
 jwt:
   secret: ${JWT_SECRET}
@@ -38,6 +60,19 @@ management:
       enabled: true
     readinessstate:
       enabled: true
+
+mail:
+  from:
+    email: ${MAIL_FROM_EMAIL:${SMTP_USERNAME}}
+    name: ${MAIL_FROM_NAME}
+
+app:
+  name: ${APP_NAME}
+  base-url: ${APP_BASE_URL}
+  otp:
+    ttl-seconds: ${OTP_TTL_SECONDS}
+    resend-window-seconds: ${OTP_RESEND_WINDOW_SECONDS}
+    max-attempts: ${OTP_MAX_ATTEMPTS}
 
 mybatis:
   config-location: classpath:mybatis/configuration/mybatis-config.xml

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gearx.security.mapper.RoleMapper">
+
+    <resultMap id="RoleResult" type="com.gearx.security.entity.Role">
+        <id     column="role_id"    property="roleId"/>
+        <result column="role_code"  property="roleCode"/>
+        <result column="role_name"  property="roleName"/>
+        <result column="priority"   property="priority"/>
+        <result column="is_active"  property="isActive"/>
+    </resultMap>
+
+    <select id="findByUserId" parameterType="int" resultMap="RoleResult">
+        SELECT
+        r.role_id,
+        r.role_code,
+        r.role_name,
+        r.priority,
+        r.is_active
+        FROM role r
+        JOIN user_role ur ON ur.role_id = r.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <select id="findByCode" parameterType="string" resultMap="RoleResult">
+        SELECT
+        r.role_id,
+        r.role_code,
+        r.role_name,
+        r.priority,
+        r.is_active
+        FROM role r
+        WHERE role_code = #{roleCode}
+        FETCH FIRST 1 ROWS ONLY
+    </select>
+
+    <insert id="insertUserRole">
+        INSERT INTO user_role(user_id, role_id)
+        VALUES (
+        #{userId},
+        #{roleId}
+        )
+    </insert>
+
+    <delete id="deleteUserRoles" parameterType="int">
+        DELETE FROM user_role
+        WHERE user_id = #{userId}
+    </delete>
+
+</mapper>

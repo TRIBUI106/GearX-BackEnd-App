@@ -18,4 +18,10 @@ public class ApiConstants {
         private Auth() {}
     }
 
+    public static final class User {
+        public static final String BASE = VERSION_V1 + "/user";
+        public static final String DELETE = "/delete";
+
+        private User() {}
+    }
 }

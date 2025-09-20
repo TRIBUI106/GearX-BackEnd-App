@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gearx.security.mapper.UserMapper">
+
+    <resultMap id="UserResult" type="com.gearx.security.entity.User">
+        <id     property="userId"    column="user_id"/>
+        <result property="username"  column="username"/>
+        <result property="email"     column="email"/>
+        <result property="password"  column="password"/>
+        <result property="fullName"  column="full_name"/>
+        <result property="phone"     column="phone"/>
+        <result property="address"   column="address"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="isActive"  column="is_active"/>
+        <result property="isDeleted" column="is_deleted"/>
+    </resultMap>
+
+    <delete id="deleteUserById" parameterType="int">
+        DELETE FROM public.user
+        WHERE user_id = #{userId}
+    </delete>
+
+    <select id="findByUsername" parameterType="string" resultMap="UserResult">
+        SELECT
+        user_id,
+        username,
+        email,
+        password,
+        full_name,
+        phone,
+        address,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_active,
+        is_deleted
+        FROM public."user"
+        WHERE username = #{username}
+        FETCH FIRST 1 ROWS ONLY
+    </select>
+
+    <select id="findByEmail" parameterType="string" resultMap="UserResult">
+        SELECT
+        user_id,
+        username,
+        email,
+        password,
+        full_name,
+        phone,
+        address,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_active,
+        is_deleted
+        FROM public."user"
+        WHERE email = #{email}
+        FETCH FIRST 1 ROWS ONLY
+    </select>
+
+    <select id="existsByUsername" parameterType="string" resultType="int">
+        SELECT COUNT(1)
+        FROM public."user"
+        WHERE username = #{username}
+        AND is_deleted = 0
+    </select>
+
+    <select id="existsByEmail" parameterType="string" resultType="int">
+        SELECT COUNT(1)
+        FROM public."user" u
+        WHERE u.email = #{email}
+        AND u.is_deleted = 0
+    </select>
+
+    <select id="existsById" parameterType="int">
+        SELECT EXISTS(SELECT 1 FROM public."user" WHERE user_id = #{id})
+    </select>
+
+    <insert id="insert" parameterType="com.gearx.security.entity.User" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
+        INSERT INTO public."user" (
+        username,
+        email,
+        password,
+        full_name,
+        phone,
+        address,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_active,
+        is_deleted
+        ) VALUES (
+        #{username},
+        #{email},
+        #{password},
+        #{fullName},
+        #{phone},
+        #{address},
+        CURRENT_TIMESTAMP,
+        #{createdBy},
+        CURRENT_TIMESTAMP,
+        #{updatedBy},
+        #{isActive},
+        0
+        )
+        RETURNING user_id
+    </insert>
+
+    <update id="updatePasswordById">
+        UPDATE public."user"
+        SET password   = #{password},
+        updated_at = CURRENT_TIMESTAMP,
+        updated_by = #{updatedBy}
+        WHERE user_id = #{userId}
+    </update>
+
+</mapper>

@@ -21,6 +21,11 @@
         <result property="isDeleted" column="is_deleted"/>
     </resultMap>
 
+    <delete id="deleteUserById" parameterType="int">
+        DELETE FROM public.user
+        WHERE user_id = #{userId}
+    </delete>
+
     <select id="findByUsername" parameterType="string" resultMap="UserResult">
         SELECT
         user_id,
@@ -73,6 +78,10 @@
         FROM public."user" u
         WHERE u.email = #{email}
         AND u.is_deleted = 0
+    </select>
+
+    <select id="existsById" parameterType="int">
+        SELECT EXISTS(SELECT 1 FROM public."user" WHERE user_id = #{id})
     </select>
 
     <insert id="insert" parameterType="com.gearx.security.entity.User" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">

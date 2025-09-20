@@ -1,5 +1,6 @@
 package com.gearx.security.controller;
 
+import com.gearx.security.configuration.UserService;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;

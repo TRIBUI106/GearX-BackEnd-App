@@ -13,9 +13,14 @@ public interface UserMapper extends BaseMapper<User> {
 
     User findByEmail(@Param("email") String email);
 
+    boolean existsById (@Param("id") int userId);
+
     int existsByUsername(@Param("username") String username);
 
     int existsByEmail(@Param("email") String email);
 
     int updatePasswordById(@Param("userId") Integer userId, @Param("password") String hashed);
+
+    int deleteUserById(@Param("userId") Integer userId);
+
 }

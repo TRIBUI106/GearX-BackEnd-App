@@ -34,6 +34,9 @@ public class SecurityConfig {
         "/api/v1/auth/forgot/request",
         "/api/v1/auth/forgot/reset",
 
+        // User API đáng ra phải xoá cái này đi
+        "/api/v1/user/delete",
+
         // PayOS
         "/api/webhooks/payos",
         "/payos/return",

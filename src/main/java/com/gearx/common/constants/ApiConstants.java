@@ -17,5 +17,4 @@ public class ApiConstants {
 
         private Auth() {}
     }
-
 }

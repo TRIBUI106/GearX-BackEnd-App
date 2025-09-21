@@ -25,19 +25,6 @@ public class AuthController {
     private final AuthService authService;
     private final PasswordResetService passwordResetService;
 
-    // Register
-    @PostMapping(ApiConstants.Auth.REGISTER)
-    public ResponseEntity<ApiResponse<Object>> register(@Valid @RequestBody RegisterRequest req) {
-        int rows = authService.register(req);
-        if (rows > 0) {
-            return ResponseHandler.success("Tạo user thành công", null);
-        }
-        return ResponseHandler.error(
-                "Tạo user thất bại",
-                com.gearx.common.exception.ErrorCode.INTERNAL_ERROR,
-                org.springframework.http.HttpStatus.BAD_REQUEST);
-    }
-
     // Login
     @PostMapping(ApiConstants.Auth.LOGIN)
     public ResponseEntity<ApiResponse<TokenResponse>> login(@Valid @RequestBody LoginRequest req) {

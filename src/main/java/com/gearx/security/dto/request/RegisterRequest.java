@@ -21,10 +21,9 @@ public class RegisterRequest {
 
     @NotBlank String password;
 
-    String fullName;
-    String phone;
-    String address;
-
+    private String fullName;
+    private String address;
+    private String phone; // optional
     private String createdBy; // optional
     private Integer isActive; // optional
     private Integer isDeleted; // optional

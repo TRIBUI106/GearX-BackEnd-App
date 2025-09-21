@@ -29,13 +29,13 @@ public class SecurityConfig {
         // AUTH API
         "/api/v1/auth/login",
         "/api/v1/auth/logout",
-        "/api/v1/auth/register",
         "/api/v1/auth/introspect",
         "/api/v1/auth/forgot/request",
         "/api/v1/auth/forgot/reset",
 
         // User API đáng ra phải xoá cái này đi
         "/api/v1/user/delete",
+        "/api/v1/user/register",
 
         // PayOS
         "/api/webhooks/payos",

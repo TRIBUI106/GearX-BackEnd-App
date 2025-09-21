@@ -8,7 +8,6 @@ public class ApiConstants {
 
     public static final class Auth {
         public static final String BASE = VERSION_V1 + "/auth";
-        public static final String REGISTER = "/register";
         public static final String LOGIN = "/login";
         public static final String LOGOUT = "/logout";
         public static final String INTROSPECT = "/introspect";
@@ -19,6 +18,7 @@ public class ApiConstants {
     }
 
     public static final class User {
+        public static final String REGISTER = "/register";
         public static final String BASE = VERSION_V1 + "/user";
         public static final String DELETE = "/delete";
 

@@ -19,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     // Register
-    @PostMapping(ApiConstants.Auth.REGISTER)
+    @PostMapping(ApiConstants.User.REGISTER)
     public ResponseEntity<ApiResponse<Object>> register(@Valid @RequestBody RegisterRequest req) {
         int rows = userService.register(req);
         if (rows > 0) {

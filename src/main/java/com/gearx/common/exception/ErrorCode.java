@@ -12,7 +12,7 @@ public enum ErrorCode {
     NOT_FOUND("2000", "Không tìm thấy"),
     ALREADY_EXIST("2000", "Đã tồn tại"),
     USERNAME_ALREADY_EXIST("2000", "Username đã tồn tại"),
-    EMAIL_ALREADY_EXIST("2000", "email đã tồn tại"),
+    EMAIL_ALREADY_EXIST("2000", "Email đã tồn tại"),
     OTP_INVALID("2000", "OTP không hợp lệ"),
     INVALID_TOKEN("2000", "Token không hợp lệ"),
     PRODUCT_NOT_FOUND("2000", "Không tìm thấy sản phẩm"),

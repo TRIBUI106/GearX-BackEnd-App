@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import com.gearx.common.exception.AppException;
 import com.gearx.common.exception.ErrorCode;
 import com.gearx.security.dto.request.LoginRequest;
-import com.gearx.security.dto.request.RegisterRequest;
 import com.gearx.security.dto.response.TokenResponse;
-import com.gearx.security.entity.User;
 import com.gearx.security.mapper.RevokedTokenMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,6 @@ public class AuthService {
     private final RevokedTokenMapper revokedTokenMapper;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-
 
 
     public TokenResponse login(LoginRequest req) {

@@ -1,4 +1,6 @@
-package com.gearx.common.model;
+package com.gearx.feature.category.entity;
+
+import com.gearx.common.model.BaseEntity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,17 +14,9 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public abstract class BaseEntity {
+public class Category extends BaseEntity {
 
-    Integer isActive;
-
-    Integer isDeleted;
-
-    String createdAt;
-
-    String createdBy;
-
-    String updatedAt;
-
-    String updatedBy;
+    Integer categoryId;
+    String name;
+    String description;
 }

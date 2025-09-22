@@ -1,5 +1,6 @@
 package com.gearx.security.configuration;
 
+import org.springframework.stereotype.Service;
 
 import com.gearx.common.exception.AppException;
 import com.gearx.common.exception.ErrorCode;
@@ -7,6 +8,7 @@ import com.gearx.security.dto.request.RegisterRequest;
 import com.gearx.security.entity.User;
 import com.gearx.security.mapper.RoleMapper;
 import com.gearx.security.mapper.UserMapper;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserMapper userMapper;
-    private final RoleMapper roleMapper;
     private final PasswordEncoder encoder;
 
 
@@ -62,14 +63,12 @@ public class UserService {
 
     public void deleteUserById(int userId) {
 
-        if ( userMapper.existsById(userId) ) {
-            if ( userMapper.deleteUserById(userId) < 1 ) {
+        if (userMapper.existsById(userId)) {
+            if (userMapper.deleteUserById(userId) < 1) {
                 throw new AppException(ErrorCode.NOT_FOUND);
             }
         } else {
             throw new AppException(ErrorCode.NOT_FOUND);
         }
-
     }
-
 }

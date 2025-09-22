@@ -13,7 +13,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     User findByEmail(@Param("email") String email);
 
-    boolean existsById (@Param("id") int userId);
+    boolean existsById(@Param("id") int userId);
 
     int existsByUsername(@Param("username") String username);
 
@@ -22,5 +22,4 @@ public interface UserMapper extends BaseMapper<User> {
     int updatePasswordById(@Param("userId") Integer userId, @Param("password") String hashed);
 
     int deleteUserById(@Param("userId") Integer userId);
-
 }

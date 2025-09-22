@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.gearx.common.exception.AppException;
 import com.gearx.common.exception.ErrorCode;
 import com.gearx.common.response.PageResponse;
+import com.gearx.feature.category.converter.CategoryConverter;
 import com.gearx.feature.category.dto.request.CategoryRequest;
 import com.gearx.feature.category.dto.response.CategoryResponse;
 import com.gearx.feature.category.entity.Category;

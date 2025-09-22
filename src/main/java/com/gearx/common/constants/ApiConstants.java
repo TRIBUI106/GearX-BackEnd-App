@@ -24,4 +24,45 @@ public class ApiConstants {
 
         private User() {}
     }
+
+    public static final class Brand {
+        public static final String BASE = VERSION_V1 + "/brand";
+        public static final String INSERT = "/insert";
+        public static final String UPDATE = "/update/{id}";
+        public static final String GET_BY_ID = "/get/{id}";
+        public static final String SEARCH_PAGEABLE = "/search";
+        public static final String SOFT_DELETE = "/delete/{id}";
+        public static final String RESTORE = "/restore/{id}";
+        public static final String ACTIVE = "/active/{id}";
+
+        private Brand() {}
+    }
+
+    public static final class Category {
+        public static final String BASE = VERSION_V1 + "/category";
+        public static final String INSERT = "/insert";
+        public static final String UPDATE = "/update/{id}";
+        public static final String GET_BY_ID = "/get/{id}";
+        public static final String SEARCH_PAGEABLE = "/search";
+        public static final String SOFT_DELETE = "/delete/{id}";
+        public static final String RESTORE = "/restore/{id}";
+        public static final String ACTIVE = "/active/{id}";
+
+        private Category() {}
+    }
+
+    public static final class Product {
+        public static final String BASE = VERSION_V1 + "/product";
+        public static final String INSERT = "/insert";
+        public static final String UPDATE = "/update/{id}";
+        public static final String GET_BY_ID = "/get/{id}";
+        public static final String SEARCH_PAGEABLE = "/search";
+        public static final String SEARCH_BY_BRAND_PAGE = "/search/brand/{brandId}";
+        public static final String SEARCH_BY_CATE_PAGE = "/search/category/{categoryId}";
+        public static final String SOFT_DELETE = "/delete/{id}";
+        public static final String RESTORE = "/restore/{id}";
+        public static final String ACTIVE = "/active/{id}";
+
+        private Product() {}
+    }
 }

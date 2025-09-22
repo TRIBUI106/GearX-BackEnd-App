@@ -30,5 +30,5 @@ public interface BrandMapper {
 
     List<Brand> pageSearch(Map<String, Object> params);
 
-    long countPageSearch(Map<String, Object> params);
+    int countPageSearch(Map<String, Object> params);
 }

@@ -31,14 +31,14 @@ public interface ProductMapper {
     // page + search tổng quát
     List<Product> pageSearch(Map<String, Object> params);
 
-    long countPageSearch(Map<String, Object> params);
+    int countPageSearch(Map<String, Object> params);
 
     // page theo brand/category
     List<Product> pageByBrandId(Map<String, Object> params);
 
-    long countPageByBrandId(Map<String, Object> params);
+    int countPageByBrandId(Map<String, Object> params);
 
     List<Product> pageByCategoryId(Map<String, Object> params);
 
-    long countPageByCategoryId(Map<String, Object> params);
+    int countPageByCategoryId(Map<String, Object> params);
 }

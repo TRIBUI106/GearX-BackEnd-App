@@ -64,9 +64,9 @@ public class AuthService {
             throw new AppException(ErrorCode.INTERNAL_ERROR);
         }
 
-//          Thay đổi, dùng trigger trong sql
-//        var role = roleMapper.findByCode("customer");
-//        roleMapper.insertUserRole(user.getUserId(), role.getRoleId());
+        //          Thay đổi, dùng trigger trong sql
+        //        var role = roleMapper.findByCode("customer");
+        //        roleMapper.insertUserRole(user.getUserId(), role.getRoleId());
 
         return rows;
     }

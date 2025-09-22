@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
         params.put("limit", limit);
 
         List<Product> rows = productMapper.pageSearch(params);
-        int total = productMapper.countPageSearch(params);
+        int total = (int) productMapper.countPageSearch(params);
 
         return productConverter.toResponsePage(rows, offset, limit, total);
     }
@@ -116,7 +116,7 @@ public class ProductServiceImpl implements ProductService {
         params.put("limit", limit);
 
         List<Product> rows = productMapper.pageByBrandId(params);
-        int total = productMapper.countPageByBrandId(params);
+        int total = (int) productMapper.countPageByBrandId(params);
 
         return productConverter.toResponsePage(rows, offset, limit, total);
     }
@@ -146,7 +146,7 @@ public class ProductServiceImpl implements ProductService {
         params.put("limit", limit);
 
         List<Product> rows = productMapper.pageByCategoryId(params);
-        int total = productMapper.countPageByCategoryId(params);
+        int total = (int) productMapper.countPageByCategoryId(params);
 
         return productConverter.toResponsePage(rows, offset, limit, total);
     }

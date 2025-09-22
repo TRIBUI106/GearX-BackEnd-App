@@ -14,13 +14,15 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class BaseEntity {
 
-    private String createdAt;
+    Integer isActive;
 
-    private String createdBy;
+    Integer isDeleted;
 
-    private String updatedAt;
+    String createdAt;
 
-    private String updatedBy;
+    String createdBy;
 
-    private Integer isDeleted;
+    String updatedAt;
+
+    String updatedBy;
 }

@@ -1,5 +1,6 @@
 package com.gearx.security.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
@@ -8,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class SecurityConfig {
@@ -29,13 +32,15 @@ public class SecurityConfig {
         // AUTH API
         "/api/v1/auth/login",
         "/api/v1/auth/logout",
-        "/api/v1/auth/register",
         "/api/v1/auth/introspect",
         "/api/v1/auth/forgot/request",
         "/api/v1/auth/forgot/reset",
 
         // User API đáng ra phải xoá cái này đi
-        "/api/v1/user/delete",
+        "/api/v1/user/register",
+
+        // Admin
+        // "api/v1/user/delete"
 
         // PayOS
         "/api/webhooks/payos",

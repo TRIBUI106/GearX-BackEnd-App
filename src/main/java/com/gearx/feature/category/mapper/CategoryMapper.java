@@ -31,5 +31,5 @@ public interface CategoryMapper {
 
     List<Category> pageSearch(Map<String, Object> params);
 
-    int countPageSearch(Map<String, Object> params);
+    long countPageSearch(Map<String, Object> params);
 }

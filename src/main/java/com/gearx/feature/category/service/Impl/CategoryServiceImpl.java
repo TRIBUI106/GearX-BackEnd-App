@@ -23,14 +23,13 @@ import lombok.RequiredArgsConstructor;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryMapper categoryMapper;
-    private final CategoryConverter categoryConverter;
 
     @Override
     public int create(CategoryRequest req) {
         if (Boolean.TRUE.equals(categoryMapper.existsByName(req.getName()))) {
             throw new AppException(ErrorCode.ALREADY_EXIST);
         }
-        Category e = categoryConverter.toEntity(req);
+        Category e = toEntity(req);
         if (e.getIsActive() == null) e.setIsActive(1);
         if (e.getIsDeleted() == null) e.setIsDeleted(0);
         return categoryMapper.insert(e);
@@ -40,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     public int update(Integer id, CategoryRequest req) {
         Category existed = categoryMapper.findById(id);
         if (existed == null) throw new AppException(ErrorCode.NOT_FOUND);
-        Category e = categoryConverter.toEntity(req);
+        Category e = toEntity(req);
         e.setCategoryId(id);
         return categoryMapper.updateById(e);
     }
@@ -49,7 +48,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponse findById(Integer id) {
         Category e = categoryMapper.findById(id);
         if (e == null) throw new AppException(ErrorCode.NOT_FOUND);
-        return categoryConverter.toResponse(e);
+        return toResponse(e);
     }
 
     @Override
@@ -68,9 +67,10 @@ public class CategoryServiceImpl implements CategoryService {
         params.put("limit", limit);
 
         List<Category> rows = categoryMapper.pageSearch(params);
-        int total = categoryMapper.countPageSearch(params);
+        long total = categoryMapper.countPageSearch(params);
 
         return categoryConverter.toResponsePage(rows, offset, limit, total);
+
     }
 
     @Override

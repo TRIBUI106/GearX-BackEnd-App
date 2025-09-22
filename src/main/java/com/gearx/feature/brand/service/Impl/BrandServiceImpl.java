@@ -27,7 +27,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public int create(BrandRequest req) {
-        if (Boolean.TRUE.equals(brandMapper.existsByName(req.getName()))) {
+        if (brandMapper.existsByName(req.getName())) {
             throw new AppException(ErrorCode.ALREADY_EXIST);
         }
         Brand e = brandConverter.toEntity(req);
@@ -68,7 +68,7 @@ public class BrandServiceImpl implements BrandService {
         params.put("limit", limit);
 
         List<Brand> rows = brandMapper.pageSearch(params);
-        int total = brandMapper.countPageSearch(params);
+        int total = (int) brandMapper.countPageSearch(params);
 
         return brandConverter.toResponsePage(rows, offset, limit, total);
     }

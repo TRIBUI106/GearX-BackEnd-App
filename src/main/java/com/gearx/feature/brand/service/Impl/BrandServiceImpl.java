@@ -27,7 +27,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public int create(BrandRequest req) {
-        if (Boolean.TRUE.equals(brandMapper.existsByName(req.getName()))) {
+        if (brandMapper.existsByName(req.getName())) {
             throw new AppException(ErrorCode.ALREADY_EXIST);
         }
         Brand e = brandConverter.toEntity(req);

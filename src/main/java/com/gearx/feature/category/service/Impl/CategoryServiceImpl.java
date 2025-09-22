@@ -68,12 +68,8 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> rows = categoryMapper.pageSearch(params);
         long total = categoryMapper.countPageSearch(params);
 
-        return PageResponse.<CategoryResponse>builder()
-                .offset(offset)
-                .limit(limit)
-                .total(total)
-                .data(rows.stream().map(this::toResponse).toList())
-                .build();
+        return categoryConverter.toResponsePage(rows, offset, limit, total);
+
     }
 
     @Override

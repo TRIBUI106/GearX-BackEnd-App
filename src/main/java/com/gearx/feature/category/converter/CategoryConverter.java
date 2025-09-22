@@ -8,5 +8,4 @@ import com.gearx.feature.category.dto.response.CategoryResponse;
 import com.gearx.feature.category.entity.Category;
 
 @Mapper(componentModel = "spring")
-public interface CategoryConverter
-        extends BaseConverter<CategoryRequest, CategoryResponse, Category> {}
+public interface CategoryConverter extends BaseConverter<CategoryRequest, CategoryResponse, Category> {}

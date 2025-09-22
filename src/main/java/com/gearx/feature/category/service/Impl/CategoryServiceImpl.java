@@ -70,7 +70,16 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> rows = categoryMapper.pageSearch(params);
         int total = categoryMapper.countPageSearch(params);
 
+<<<<<<< Updated upstream
         return categoryConverter.toResponsePage(rows, offset, limit, total);
+=======
+        return PageResponse.<CategoryResponse>builder()
+                .offset(offset)
+                .limit(limit)
+                .total(total)
+                .data(rows.stream().map(categoryConverter::toResponse).toList())
+                .build();
+>>>>>>> Stashed changes
     }
 
     @Override

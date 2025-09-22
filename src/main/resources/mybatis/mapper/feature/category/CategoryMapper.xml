@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gearx.feature.category.mapper.CategoryMapper">
+
+    <resultMap id="CategoryResult" type="com.gearx.feature.category.entity.Category">
+        <id     column="category_id" property="categoryId"/>
+        <result column="name"        property="name"/>
+        <result column="description" property="description"/>
+        <result column="is_active"   property="isActive"/>
+        <result column="is_deleted"  property="isDeleted"/>
+        <result column="created_at"  property="createdAt"/>
+        <result column="created_by"  property="createdBy"/>
+        <result column="updated_at"  property="updatedAt"/>
+        <result column="updated_by"  property="updatedBy"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.gearx.feature.category.entity.Category"
+            useGeneratedKeys="true" keyProperty="categoryId" keyColumn="category_id">
+        INSERT INTO category (
+        name, description, is_active, is_deleted, created_at, created_by, updated_at, updated_by
+        )
+        VALUES (
+        #{name},
+        #{description},
+        #{isActive},
+        #{isDeleted},
+        now(),
+        #{createdBy},
+        now(),
+        #{updatedBy}
+        )
+    </insert>
+
+    <select id="existsByName" parameterType="string" resultType="boolean">
+        SELECT EXISTS(
+        SELECT 1 FROM category WHERE name = #{name} AND is_deleted = 0 LIMIT 1
+        )
+    </select>
+
+    <update id="updateById" parameterType="com.gearx.feature.category.entity.Category">
+        UPDATE category
+        SET
+        name = #{name},
+        description = #{description},
+        is_active = #{isActive},
+        is_deleted = #{isDeleted},
+        updated_at = now(),
+        updated_by = #{updatedBy}
+        WHERE category_id = #{categoryId}
+    </update>
+
+    <update id="softDeleteById" parameterType="map">
+        UPDATE category
+        SET is_deleted = 1, updated_at = now(), updated_by = #{updatedBy}
+        WHERE category_id = #{categoryId} AND is_deleted = 0
+    </update>
+
+    <update id="restoreById" parameterType="map">
+        UPDATE category
+        SET is_deleted = 0, updated_at = now(), updated_by = #{updatedBy}
+        WHERE category_id = #{categoryId} AND is_deleted = 1
+    </update>
+
+    <update id="updateActive" parameterType="map">
+        UPDATE category
+        SET is_active = #{isActive}, updated_at = now(), updated_by = #{updatedBy}
+        WHERE category_id = #{categoryId} AND is_deleted = 0
+    </update>
+
+    <select id="findById" parameterType="int" resultMap="CategoryResult">
+        SELECT
+        category_id, name, description, is_active, is_deleted,
+        created_at, created_by, updated_at, updated_by
+        FROM category
+        WHERE category_id = #{categoryId} AND is_deleted = 0
+        LIMIT 1
+    </select>
+
+    <select id="pageSearch" parameterType="map" resultMap="CategoryResult">
+        <bind name="__limit" value="pageable != null ? pageable.pageSize : (size != null ? size : (limit != null ? limit : 20))"/>
+        <bind name="__offset" value="pageable != null ? pageable.offset : (offset != null ? offset : (page != null &amp;&amp; size != null ? page * size : 0))"/>
+
+        SELECT
+        category_id, name, description, is_active, is_deleted,
+        created_at, created_by, updated_at, updated_by
+        FROM category
+        <where>
+            <if test="q != null and q != ''">name ILIKE '%' || #{q} || '%'</if>
+            <if test="active != null">AND is_active = #{active}</if>
+            AND is_deleted = 0
+        </where>
+        ORDER BY
+        <choose>
+            <when test="sortBy == 'name'">name</when>
+            <when test="sortBy == 'updated_at'">updated_at</when>
+            <otherwise>created_at</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">ASC</when>
+            <otherwise>DESC</otherwise>
+        </choose>
+        LIMIT #{__limit} OFFSET #{__offset}
+    </select>
+
+    <select id="countPageSearch" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM category
+        <where>
+            <if test="q != null and q != ''">name ILIKE '%' || #{q} || '%'</if>
+            <if test="active != null">AND is_active = #{active}</if>
+            AND is_deleted = 0
+        </where>
+    </select>
+
+</mapper>

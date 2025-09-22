@@ -68,7 +68,7 @@ public class BrandServiceImpl implements BrandService {
         params.put("limit", limit);
 
         List<Brand> rows = brandMapper.pageSearch(params);
-        int total = brandMapper.countPageSearch(params);
+        int total = (int) brandMapper.countPageSearch(params);
 
         return brandConverter.toResponsePage(rows, offset, limit, total);
     }

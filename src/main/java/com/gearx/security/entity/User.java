@@ -28,8 +28,8 @@ public class User extends BaseEntity {
 
     java.util.List<com.gearx.security.entity.Role> roles;
 
+    String avatarUrl;
     String createdBy;
-
     Integer isActive;
     Integer isDeleted;
 }

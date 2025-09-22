@@ -22,4 +22,5 @@ public interface UserMapper extends BaseMapper<User> {
     int updatePasswordById(@Param("userId") Integer userId, @Param("password") String hashed);
 
     int deleteUserById(@Param("userId") Integer userId);
+
 }

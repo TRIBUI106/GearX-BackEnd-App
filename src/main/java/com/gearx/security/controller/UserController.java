@@ -1,5 +1,6 @@
 package com.gearx.security.controller;
 
+import com.gearx.security.entity.User;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping(ApiConstants.User.BASE)
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -39,5 +39,11 @@ public class UserController {
     public ResponseEntity<ApiResponse<Object>> deleteUser(@Valid @RequestParam int id) {
         userService.deleteUserById(id);
         return ResponseHandler.success("Đã xoá tài khoản với id " + id + " thành công !", id);
+    }
+
+    @GetMapping(ApiConstants.User.FETCH)
+    public ResponseEntity<ApiResponse<User>> fetchUserData(@Valid @RequestParam String username) {
+        User u = userService.fetchDataByUsername(username);
+        return ResponseHandler.success("Fetch data thành công cho " + username, u);
     }
 }

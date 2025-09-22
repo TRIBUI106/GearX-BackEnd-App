@@ -18,6 +18,7 @@ public class ApiConstants {
     }
 
     public static final class User {
+        public static final String FETCH = "/fetch";
         public static final String REGISTER = "/register";
         public static final String BASE = VERSION_V1 + "/user";
         public static final String DELETE = "/delete";

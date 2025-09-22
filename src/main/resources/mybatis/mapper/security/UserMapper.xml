@@ -22,7 +22,7 @@
     </resultMap>
 
     <delete id="deleteUserById" parameterType="int">
-        DELETE FROM public.user
+        DELETE FROM public."user"
         WHERE user_id = #{userId}
     </delete>
 

@@ -1,0 +1,22 @@
+package com.gearx.feature.brand.entity;
+
+import com.gearx.common.model.BaseEntity;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Brand extends BaseEntity {
+
+    Integer brandId;
+    String name;
+    String description;
+}

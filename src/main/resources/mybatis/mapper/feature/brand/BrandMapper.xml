@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gearx.feature.brand.mapper.BrandMapper">
+
+    <resultMap id="BrandResult" type="com.gearx.feature.brand.entity.Brand">
+        <id     column="brand_id"    property="brandId"/>
+        <result column="name"        property="name"/>
+        <result column="description" property="description"/>
+        <result column="is_active"   property="isActive"/>
+        <result column="is_deleted"  property="isDeleted"/>
+        <result column="created_at"  property="createdAt"/>
+        <result column="created_by"  property="createdBy"/>
+        <result column="updated_at"  property="updatedAt"/>
+        <result column="updated_by"  property="updatedBy"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.gearx.feature.brand.entity.Brand"
+            useGeneratedKeys="true" keyProperty="brandId" keyColumn="brand_id">
+        INSERT INTO brand (
+        name, description, is_active, is_deleted, created_at, created_by, updated_at, updated_by
+        )
+        VALUES (
+        #{name},
+        #{description},
+        #{isActive},
+        #{isDeleted},
+        now(),
+        #{createdBy},
+        now(),
+        #{updatedBy}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="com.gearx.feature.brand.entity.Brand">
+        UPDATE brand
+        SET
+        name = #{name},
+        description = #{description},
+        is_active = #{isActive},
+        is_deleted = #{isDeleted},
+        updated_at = now(),
+        updated_by = #{updatedBy}
+        WHERE brand_id = #{brandId}
+    </update>
+
+    <update id="softDeleteById" parameterType="map">
+        UPDATE brand
+        SET is_deleted = 1, updated_at = now(), updated_by = #{updatedBy}
+        WHERE brand_id = #{brandId} AND is_deleted = 0
+    </update>
+
+    <update id="restoreById" parameterType="map">
+        UPDATE brand
+        SET is_deleted = 0, updated_at = now(), updated_by = #{updatedBy}
+        WHERE brand_id = #{brandId} AND is_deleted = 1
+    </update>
+
+    <select id="existsByName" parameterType="string" resultType="boolean">
+        SELECT EXISTS(
+        SELECT 1 FROM brand
+        WHERE name = #{name} AND is_deleted = 0
+        LIMIT 1
+        )
+    </select>
+
+    <update id="updateActive" parameterType="map">
+        UPDATE brand
+        SET is_active = #{isActive}, updated_at = now(), updated_by = #{updatedBy}
+        WHERE brand_id = #{brandId} AND is_deleted = 0
+    </update>
+
+    <select id="findById" parameterType="int" resultMap="BrandResult">
+        SELECT
+        brand_id, name, description, is_active, is_deleted,
+        created_at, created_by, updated_at, updated_by
+        FROM brand
+        WHERE brand_id = #{brandId} AND is_deleted = 0
+        LIMIT 1
+    </select>
+
+    <select id="pageSearch" parameterType="map" resultMap="BrandResult">
+        <bind name="__limit" value="pageable != null ? pageable.pageSize : (size != null ? size : (limit != null ? limit : 20))"/>
+        <bind name="__offset" value="pageable != null ? pageable.offset : (offset != null ? offset : (page != null &amp;&amp; size != null ? page * size : 0))"/>
+
+        SELECT
+        brand_id, name, description, is_active, is_deleted,
+        created_at, created_by, updated_at, updated_by
+        FROM brand
+        <where>
+            <if test="q != null and q != ''">name ILIKE '%' || #{q} || '%'</if>
+            <if test="active != null">AND is_active = #{active}</if>
+            AND is_deleted = 0
+        </where>
+        ORDER BY
+        <choose>
+            <when test="sortBy == 'name'">name</when>
+            <when test="sortBy == 'updated_at'">updated_at</when>
+            <otherwise>created_at</otherwise>
+        </choose>
+        <choose>
+            <when test="dir == 'asc'">ASC</when>
+            <otherwise>DESC</otherwise>
+        </choose>
+        LIMIT #{__limit} OFFSET #{__offset}
+    </select>
+
+    <select id="countPageSearch" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM brand
+        <where>
+            <if test="q != null and q != ''">name ILIKE '%' || #{q} || '%'</if>
+            <if test="active != null">AND is_active = #{active}</if>
+            AND is_deleted = 0
+        </where>
+    </select>
+
+</mapper>

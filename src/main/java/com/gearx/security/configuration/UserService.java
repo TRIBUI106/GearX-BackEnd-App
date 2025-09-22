@@ -71,4 +71,10 @@ public class UserService {
             throw new AppException(ErrorCode.NOT_FOUND);
         }
     }
+
+    public User fetchDataByUsername(String username) {
+
+        return userMapper.findByUsername(username);
+
+    }
 }

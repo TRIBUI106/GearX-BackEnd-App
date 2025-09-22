@@ -19,6 +19,7 @@
         <result property="updatedBy" column="updated_by"/>
         <result property="isActive"  column="is_active"/>
         <result property="isDeleted" column="is_deleted"/>
+        <result property="avatarUrl" column="avatar_url"/>
     </resultMap>
 
     <delete id="deleteUserById" parameterType="int">
@@ -40,7 +41,8 @@
         updated_at,
         updated_by,
         is_active,
-        is_deleted
+        is_deleted,
+        avatar_url
         FROM public."user"
         WHERE username = #{username}
         FETCH FIRST 1 ROWS ONLY
@@ -60,7 +62,8 @@
         updated_at,
         updated_by,
         is_active,
-        is_deleted
+        is_deleted,
+        avatar_url
         FROM public."user"
         WHERE email = #{email}
         FETCH FIRST 1 ROWS ONLY
@@ -95,7 +98,8 @@
         updated_at,
         updated_by,
         is_active,
-        is_deleted
+        is_deleted,
+        avatar_url
         ) VALUES (
         #{username},
         #{email},
@@ -106,7 +110,8 @@
         CURRENT_TIMESTAMP,
         #{updatedBy},
         #{isActive},
-        0
+        0,
+        #{avatarUrl}
         )
         RETURNING user_id
     </insert>

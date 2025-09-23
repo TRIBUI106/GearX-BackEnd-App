@@ -28,6 +28,7 @@ public enum ErrorCode {
     MADE_FROM_EXISTED("2000", "Xuất xứ đã tồn tại"),
     MADE_FROM_EMPTY("2000", "Không có xuất xứ tồn tại"),
 
+
     // =========== SYSTEM ============
     BAD_SQL("1001", "Sai câu lệnh SQL"),
     INTERNAL_ERROR("5000", "Lỗi hệ thống"),

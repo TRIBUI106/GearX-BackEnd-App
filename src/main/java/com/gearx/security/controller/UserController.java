@@ -50,6 +50,6 @@ public class UserController {
     @PutMapping(ApiConstants.User.UPDATE)
     public ResponseEntity<ApiResponse<Object>> updateUser(@Valid @RequestParam int userId, @RequestBody User user) {
         int updated = userService.updateUserByUserId(userId, user);
-        return ResponseHandler.success("Cập nhật thông tin cho " + user.getFullName() + " thành công !", updated);
+        return ResponseHandler.success("Cập nhật thông tin thành công !", updated);
     }
 }

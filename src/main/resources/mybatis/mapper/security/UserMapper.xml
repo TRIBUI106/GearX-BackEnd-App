@@ -125,6 +125,15 @@
     </update>
 
     <update id="updateUserById">
+        UPDATE public."user"
+        SET full_name = #{user.fullName},
+            email = #{user.email},
+            phone = #{user.phone},
+            address = #{user.address},
+            avatar_url = #{user.avatarUrl},
+            updated_at = CURRENT_TIMESTAMP,
+            updated_by = #{user.updatedBy}
+        WHERE user_id = #{userId}
     </update>
 
 </mapper>

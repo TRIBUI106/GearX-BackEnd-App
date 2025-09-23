@@ -78,7 +78,12 @@ public class UserService {
 
     }
 
-    public int updateUserByUserId(int id, User u) {
-        return userMapper.updateUserById(id, u);
+    public int updateUserByUserId(int userId, User user) {
+
+//        if ( userId != user.getUserId() ) {
+//            throw new AppException(ErrorCode.FORBIDDEN);
+//        }
+
+        return userMapper.updateUserById(userId, user);
     }
 }

@@ -86,8 +86,17 @@
         created_at, created_by, updated_at, updated_by
         FROM category
         <where>
-            <if test="q != null and q != ''">name ILIKE '%' || #{q} || '%'</if>
-            <if test="active != null">AND is_active = #{active}</if>
+            <if test="q != null and q.trim() != ''">
+                AND (name ILIKE CONCAT('%', #{q}, '%')
+                OR  description ILIKE CONCAT('%', #{q}, '%'))
+            </if>
+            <if test="active != null">
+                AND is_active =
+                <choose>
+                    <when test="active">1</when>
+                    <otherwise>0</otherwise>
+                </choose>
+            </if>
             AND is_deleted = 0
         </where>
         ORDER BY
@@ -107,8 +116,17 @@
         SELECT COUNT(1)
         FROM category
         <where>
-            <if test="q != null and q != ''">name ILIKE '%' || #{q} || '%'</if>
-            <if test="active != null">AND is_active = #{active}</if>
+            <if test="q != null and q.trim() != ''">
+                AND (name ILIKE CONCAT('%', #{q}, '%')
+                OR  description ILIKE CONCAT('%', #{q}, '%'))
+            </if>
+            <if test="active != null">
+                AND is_active =
+                <choose>
+                    <when test="active">1</when>
+                    <otherwise>0</otherwise>
+                </choose>
+            </if>
             AND is_deleted = 0
         </where>
     </select>

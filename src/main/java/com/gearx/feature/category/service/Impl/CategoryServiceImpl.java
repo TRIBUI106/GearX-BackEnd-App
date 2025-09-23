@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
         params.put("limit", limit);
 
         List<Category> rows = categoryMapper.pageSearch(params);
-        int total = categoryMapper.countPageSearch(params);
+        int total = (int) categoryMapper.countPageSearch(params);
 
         return categoryConverter.toResponsePage(rows, offset, limit, total);
 

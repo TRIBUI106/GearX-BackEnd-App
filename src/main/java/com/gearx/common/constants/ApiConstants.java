@@ -22,6 +22,7 @@ public class ApiConstants {
         public static final String REGISTER = "/register";
         public static final String BASE = VERSION_V1 + "/user";
         public static final String DELETE = "/delete";
+        public static final String UPDATE = "/update";
 
         private User() {}
     }

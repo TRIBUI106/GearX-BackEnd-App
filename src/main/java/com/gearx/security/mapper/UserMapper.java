@@ -23,4 +23,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     int deleteUserById(@Param("userId") Integer userId);
 
+    int updateUserById(@Param("userId") Integer userId, User user);
+
 }

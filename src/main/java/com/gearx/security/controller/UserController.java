@@ -46,4 +46,10 @@ public class UserController {
         User u = userService.fetchDataByUsername(username);
         return ResponseHandler.success("Fetch data thành công cho " + username, u);
     }
+
+    @PutMapping(ApiConstants.User.UPDATE)
+    public ResponseEntity<ApiResponse<Object>> updateUser(@Valid @RequestParam int userId, @RequestBody User user) {
+        int updated = userService.updateUserByUserId(userId, user);
+        return ResponseHandler.success("Cập nhật thông tin cho " + user.getFullName() + " thành công !", updated);
+    }
 }

@@ -124,4 +124,7 @@
         WHERE user_id = #{userId}
     </update>
 
+    <update id="updateUserById">
+    </update>
+
 </mapper>

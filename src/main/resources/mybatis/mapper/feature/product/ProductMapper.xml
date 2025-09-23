@@ -141,7 +141,10 @@
     <!-- Page + Search -->
     <select id="pageSearch" parameterType="map" resultMap="ProductResult">
         <bind name="__limit" value="pageable != null ? pageable.pageSize : (size != null ? size : (limit != null ? limit : 20))"/>
-        <bind name="__offset" value="pageable != null ? pageable.offset : (offset != null ? offset : (page != null &amp;&amp; size != null ? page * size : 0))"/>
+        <bind name="__offset"
+              value="pageable != null ? pageable.offset
+             : (offset != null ? offset
+                : (page != null &amp;&amp; size != null ? (page - 1) * size : 0))"/>
 
         SELECT
         product_id, name, short_description, description, brand_id, category_id, model,
@@ -157,10 +160,16 @@
             <if test="categoryId != null">AND category_id = #{categoryId}</if>
             <if test="minPrice != null">AND price &gt;= #{minPrice}</if>
             <if test="maxPrice != null">AND price &lt;= #{maxPrice}</if>
-            <if test="active != null">AND is_active = #{active}</if>
+            <if test="active != null">
+                AND is_active =
+                <choose>
+                    <when test="active">1</when>
+                    <otherwise>0</otherwise>
+                </choose>
+            </if>
             <if test="hasStock != null and hasStock">AND stock_quantity &gt; 0</if>
-            <if test="attributesContains != null and attributesContains != ''">
-                AND attributes @> CAST(#{attributesContains} AS jsonb)
+            <if test="attributesContains != null and attributesContains.trim() != ''">
+                AND attributes::text ILIKE CONCAT('%', #{attributesContains}, '%')
             </if>
             AND is_deleted = 0
         </where>
@@ -189,10 +198,16 @@
             <if test="categoryId != null">AND category_id = #{categoryId}</if>
             <if test="minPrice != null">AND price &gt;= #{minPrice}</if>
             <if test="maxPrice != null">AND price &lt;= #{maxPrice}</if>
-            <if test="active != null">AND is_active = #{active}</if>
+            <if test="active != null">
+                AND is_active =
+                <choose>
+                    <when test="active">1</when>
+                    <otherwise>0</otherwise>
+                </choose>
+            </if>
             <if test="hasStock != null and hasStock">AND stock_quantity &gt; 0</if>
-            <if test="attributesContains != null and attributesContains != ''">
-                AND attributes @> CAST(#{attributesContains} AS jsonb)
+            <if test="attributesContains != null and attributesContains.trim() != ''">
+                AND attributes::text ILIKE CONCAT('%', #{attributesContains}, '%')
             </if>
             AND is_deleted = 0
         </where>
@@ -200,7 +215,10 @@
 
     <select id="pageByBrandId" parameterType="map" resultMap="ProductResult">
         <bind name="__limit"  value="pageable != null ? pageable.pageSize : (size != null ? size : (limit != null ? limit : 20))"/>
-        <bind name="__offset" value="pageable != null ? pageable.offset   : (offset != null ? offset : (page != null &amp;&amp; size != null ? page * size : 0))"/>
+        <bind name="__offset"
+              value="pageable != null ? pageable.offset
+             : (offset != null ? offset
+                : (page != null &amp;&amp; size != null ? (page - 1) * size : 0))"/>
 
         SELECT
         product_id, name, short_description, description, brand_id, category_id, model,
@@ -211,10 +229,17 @@
         <where>
             brand_id = #{brandId}
             AND is_deleted = 0
-            <if test="q != null and q != ''">
-                AND (name ILIKE '%' || #{q} || '%' OR short_description ILIKE '%' || #{q} || '%')
+            <if test="q != null and q.trim() != ''">
+                AND (name ILIKE CONCAT('%', #{q}, '%')
+                OR  short_description ILIKE CONCAT('%', #{q}, '%'))
             </if>
-            <if test="active != null">AND is_active = #{active}</if>
+            <if test="active != null">
+                AND is_active =
+                <choose>
+                    <when test="active">1</when>
+                    <otherwise>0</otherwise>
+                </choose>
+            </if>
             <if test="hasStock != null and hasStock">AND stock_quantity &gt; 0</if>
         </where>
         ORDER BY
@@ -237,17 +262,27 @@
         <where>
             brand_id = #{brandId}
             AND is_deleted = 0
-            <if test="q != null and q != ''">
-                AND (name ILIKE '%' || #{q} || '%' OR short_description ILIKE '%' || #{q} || '%')
+            <if test="q != null and q.trim() != ''">
+                AND (name ILIKE CONCAT('%', #{q}, '%')
+                OR  short_description ILIKE CONCAT('%', #{q}, '%'))
             </if>
-            <if test="active != null">AND is_active = #{active}</if>
+            <if test="active != null">
+                AND is_active =
+                <choose>
+                    <when test="active">1</when>
+                    <otherwise>0</otherwise>
+                </choose>
+            </if>
             <if test="hasStock != null and hasStock">AND stock_quantity &gt; 0</if>
         </where>
     </select>
 
     <select id="pageByCategoryId" parameterType="map" resultMap="ProductResult">
         <bind name="__limit"  value="pageable != null ? pageable.pageSize : (size != null ? size : (limit != null ? limit : 20))"/>
-        <bind name="__offset" value="pageable != null ? pageable.offset   : (offset != null ? offset : (page != null &amp;&amp; size != null ? page * size : 0))"/>
+        <bind name="__offset"
+              value="pageable != null ? pageable.offset
+             : (offset != null ? offset
+                : (page != null &amp;&amp; size != null ? (page - 1) * size : 0))"/>
 
         SELECT
         product_id, name, short_description, description, brand_id, category_id, model,
@@ -258,10 +293,17 @@
         <where>
             category_id = #{categoryId}
             AND is_deleted = 0
-            <if test="q != null and q != ''">
-                AND (name ILIKE '%' || #{q} || '%' OR short_description ILIKE '%' || #{q} || '%')
+            <if test="q != null and q.trim() != ''">
+                AND (name ILIKE CONCAT('%', #{q}, '%')
+                OR  short_description ILIKE CONCAT('%', #{q}, '%'))
             </if>
-            <if test="active != null">AND is_active = #{active}</if>
+            <if test="active != null">
+                AND is_active =
+                <choose>
+                    <when test="active">1</when>
+                    <otherwise>0</otherwise>
+                </choose>
+            </if>
             <if test="hasStock != null and hasStock">AND stock_quantity &gt; 0</if>
         </where>
         ORDER BY
@@ -284,10 +326,17 @@
         <where>
             category_id = #{categoryId}
             AND is_deleted = 0
-            <if test="q != null and q != ''">
-                AND (name ILIKE '%' || #{q} || '%' OR short_description ILIKE '%' || #{q} || '%')
+            <if test="q != null and q.trim() != ''">
+                AND (name ILIKE CONCAT('%', #{q}, '%')
+                OR  short_description ILIKE CONCAT('%', #{q}, '%'))
             </if>
-            <if test="active != null">AND is_active = #{active}</if>
+            <if test="active != null">
+                AND is_active =
+                <choose>
+                    <when test="active">1</when>
+                    <otherwise>0</otherwise>
+                </choose>
+            </if>
             <if test="hasStock != null and hasStock">AND stock_quantity &gt; 0</if>
         </where>
     </select>

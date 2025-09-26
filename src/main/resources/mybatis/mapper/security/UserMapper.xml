@@ -120,7 +120,7 @@
         UPDATE public."user"
         SET password   = #{password},
         updated_at = CURRENT_TIMESTAMP,
-        updated_by = #{updatedBy}
+        updated_by = #{email}
         WHERE user_id = #{userId}
     </update>
 

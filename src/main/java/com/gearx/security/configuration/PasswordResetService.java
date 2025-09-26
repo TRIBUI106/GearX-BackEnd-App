@@ -59,7 +59,7 @@ public class PasswordResetService {
         }
         // update password
         String hash = encoder.encode(newPassword);
-        int rows = userMapper.updatePasswordById(user.getUserId(), hash);
+        int rows = userMapper.updatePasswordById(email, user.getUserId(), hash);
         if (rows <= 0) throw new AppException(ErrorCode.INTERNAL_ERROR);
         otpService.invalidate(email);
     }

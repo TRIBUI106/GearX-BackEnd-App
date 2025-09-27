@@ -43,8 +43,9 @@ public class PasswordResetService {
             return; // vẫn trả success
         }
 
+        String username = user.getUsername();
         String otp = otpService.generateAndStore(email);
-        String html = PasswordResetTemplate.build(appName, email, otp, baseUrl + "/support");
+        String html = PasswordResetTemplate.build(appName, username, otp, baseUrl + "/support");
         emailService.sendHtml(email, "[%s] OTP đổi mật khẩu".formatted(appName), html);
     }
 

@@ -57,8 +57,8 @@ public class ApiConstants {
         public static final String BASE = VERSION_V1 + "/product";
         public static final String INSERT = "/insert";
         public static final String UPDATE = "/update/{id}";
-        public static final String UPLOAD_MAIN_IMG = "/{id}/images/main";
-        public static final String UPLOAD_GALLERY = "/{id}/images";
+        public static final String UPDATE_MAIN_IMG = "/{id}/images/main";
+        public static final String UPDATE_GALLERY = "/{id}/images";
         public static final String GET_BY_ID = "/get/{id}";
         public static final String SEARCH_PAGEABLE = "/search";
         public static final String SEARCH_BY_BRAND_PAGE = "/search/brand/{brandId}";

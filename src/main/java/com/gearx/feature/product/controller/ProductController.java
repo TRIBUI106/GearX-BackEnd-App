@@ -40,7 +40,7 @@ public class ProductController {
         return ResponseHandler.success("UPDATED", productService.update(id, req));
     }
 
-    @PostMapping(path = ApiConstants.Product.UPLOAD_MAIN_IMG, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = ApiConstants.Product.UPDATE_MAIN_IMG, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Object uploadMain(@PathVariable("id") Long productId,
                              @RequestParam("file") MultipartFile file,
                              @RequestHeader(value = "user", required = false) Integer userId) {
@@ -48,7 +48,7 @@ public class ProductController {
         return java.util.Map.of("mainImageUrl", url);
     }
 
-    @PostMapping(path = ApiConstants.Product.UPLOAD_GALLERY, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = ApiConstants.Product.UPDATE_GALLERY, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Object uploadGallery(@PathVariable("id") Long productId,
                                 @RequestParam("files") List<MultipartFile> files,
                                 @RequestHeader(value = "user", required = false) Integer userId) {

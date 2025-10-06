@@ -18,7 +18,9 @@
         <result column="stock_quantity"    property="stockQuantity"/>
         <result column="warranty_months"   property="warrantyMonths"/>
         <result column="main_image_url"    property="mainImageUrl"/>
-        <result column="image_urls"        property="imageUrls"    jdbcType="OTHER"/>
+        <result column="image_urls"     property="imageUrls"
+                jdbcType="OTHER"
+                typeHandler="com.gearx.common.mybatis.JsonStringListTypeHandler"/>
         <result column="is_active"         property="isActive"/>
         <result column="is_deleted"        property="isDeleted"/>
         <result column="created_at"        property="createdAt"/>
@@ -53,8 +55,9 @@
         #{warrantyMonths},
         #{mainImageUrl},
         <choose>
-            <when test="imageUrls != null and imageUrls.size() &gt; 0">
-                ARRAY[<foreach collection="imageUrls" item="u" separator=",">#{u}</foreach>]::text[]
+            <when test="imageUrls != null and imageUrls.size() > 0">
+                #{imageUrls, jdbcType=OTHER,
+                    typeHandler=com.gearx.common.mybatis.JsonStringListTypeHandler}
             </when>
             <otherwise>NULL</otherwise>
         </choose>,
@@ -89,8 +92,9 @@
         main_image_url = #{mainImageUrl},
         image_urls =
         <choose>
-            <when test="imageUrls != null and imageUrls.size() &gt; 0">
-                ARRAY[<foreach collection="imageUrls" item="u" separator=",">#{u}</foreach>]::text[]
+            <when test="imageUrls != null and imageUrls.size() > 0">
+                #{imageUrls, jdbcType=OTHER,
+                    typeHandler=com.gearx.common.mybatis.JsonStringListTypeHandler}
             </when>
             <otherwise>NULL</otherwise>
         </choose>,
@@ -122,6 +126,29 @@
         UPDATE product
         SET is_deleted = 0, updated_at = now(), updated_by = #{updatedBy}
         WHERE product_id = #{productId} AND is_deleted = 1
+    </update>
+
+    <update id="updateMainImage">
+        UPDATE product
+        SET main_image_url = #{mainImageUrl},
+        updated_at = now(),
+        updated_by = #{updatedBy}
+        WHERE product_id = #{productId} AND is_deleted = 0
+    </update>
+
+    <update id="updateGallery">
+        UPDATE product
+        SET image_urls =
+        <choose>
+            <when test="imageUrls != null and imageUrls.size() > 0">
+                #{imageUrls, jdbcType=OTHER,
+                  typeHandler=com.gearx.common.mybatis.JsonStringListTypeHandler}
+            </when>
+            <otherwise>NULL</otherwise>
+        </choose>,
+        updated_at = now(),
+        updated_by = #{updatedBy}
+        WHERE product_id = #{productId} AND is_deleted = 0
     </update>
 
     <select id="existsByName" parameterType="string" resultType="boolean">

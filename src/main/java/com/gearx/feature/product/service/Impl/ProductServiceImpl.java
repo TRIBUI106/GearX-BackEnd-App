@@ -1,10 +1,14 @@
 package com.gearx.feature.product.service.Impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.gearx.common.exception.AppException;
@@ -18,6 +22,7 @@ import com.gearx.feature.product.mapper.ProductMapper;
 import com.gearx.feature.product.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +30,11 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
     private final ProductConverter productConverter;
+
+    private final Cloudinary cloudinary;
+
+    @Value("${cloudinary.folder}")
+    private String folder;
 
     @Override
     public int create(ProductRequest req) {
@@ -44,6 +54,31 @@ public class ProductServiceImpl implements ProductService {
         productConverter.updateEntity(req, existed);
         existed.setProductId(id);
         return productMapper.updateById(existed);
+    }
+
+    @Override
+    public String uploadMainImage(Long productId, MultipartFile file, Integer userId) {
+        String url = uploadOne(file);
+        Map<String, Object> p = new HashMap<>();
+        p.put("productId", productId);
+        p.put("mainImageUrl", url);
+        p.put("updatedBy", userId);
+        productMapper.updateMainImage(productId, url, userId);
+        return url;
+    }
+
+    @Override
+    public List<String> uploadGallery(Long productId, List<MultipartFile> files, Integer userId) {
+        List<String> urls = new ArrayList<>();
+        for (MultipartFile f : files) {
+            if (f != null && !f.isEmpty()) urls.add(uploadOne(f));
+        }
+        Map<String, Object> p = new HashMap<>();
+        p.put("productId", productId);
+        p.put("imageUrls", urls);
+        p.put("updatedBy", userId);
+        productMapper.updateGallery(productId, urls, userId);
+        return urls;
     }
 
     @Override
@@ -199,4 +234,17 @@ public class ProductServiceImpl implements ProductService {
                 sortBy,
                 dir);
     }
+
+    private String uploadOne(MultipartFile file) {
+        try {
+            Map<?,?> res = cloudinary.uploader().upload(
+                    file.getBytes(),
+                    ObjectUtils.asMap("folder", folder)
+            );
+            return (String) res.get("secure_url"); // URL https
+        } catch (Exception e) {
+            throw new RuntimeException("Upload to Cloudinary failed", e);
+        }
+    }
+
 }

@@ -36,6 +36,12 @@ spring:
   jackson:
     time-zone: Asia/Ho_Chi_Minh
 
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
+  folder: ${FOLDER}
+
 jwt:
   secret: ${JWT_SECRET}
   issuer: ${JWT_ISSUER}

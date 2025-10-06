@@ -20,7 +20,7 @@
         <result column="main_image_url"    property="mainImageUrl"/>
         <result column="image_urls"     property="imageUrls"
                 jdbcType="OTHER"
-                typeHandler="com.gearx.common.mybatis.JsonStringListTypeHandler"/>
+                typeHandler="com.gearx.common.handler.JsonStringListTypeHandler"/>
         <result column="is_active"         property="isActive"/>
         <result column="is_deleted"        property="isDeleted"/>
         <result column="created_at"        property="createdAt"/>

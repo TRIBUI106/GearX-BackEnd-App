@@ -1,4 +1,4 @@
-package com.gearx.feature.category.service.Impl;
+package com.gearx.feature.category.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +71,6 @@ public class CategoryServiceImpl implements CategoryService {
         int total = (int) categoryMapper.countPageSearch(params);
 
         return categoryConverter.toResponsePage(rows, offset, limit, total);
-
     }
 
     @Override

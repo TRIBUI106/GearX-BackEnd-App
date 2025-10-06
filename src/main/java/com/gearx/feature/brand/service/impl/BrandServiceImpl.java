@@ -1,4 +1,4 @@
-package com.gearx.feature.brand.service.Impl;
+package com.gearx.feature.brand.service.impl;
 
 import java.util.HashMap;
 import java.util.List;

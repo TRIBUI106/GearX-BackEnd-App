@@ -1,4 +1,4 @@
-package com.gearx.security.configuration;
+package com.gearx.security.service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -22,7 +22,6 @@ public class AuthService {
     private final RevokedTokenMapper revokedTokenMapper;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-
 
     public TokenResponse login(LoginRequest req) {
         Authentication auth =

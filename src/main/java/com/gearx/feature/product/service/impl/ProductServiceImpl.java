@@ -1,4 +1,4 @@
-package com.gearx.feature.product.service.Impl;
+package com.gearx.feature.product.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.gearx.common.exception.AppException;
 import com.gearx.common.exception.ErrorCode;
 import com.gearx.common.response.PageResponse;
@@ -22,7 +23,6 @@ import com.gearx.feature.product.mapper.ProductMapper;
 import com.gearx.feature.product.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -237,14 +237,13 @@ public class ProductServiceImpl implements ProductService {
 
     private String uploadOne(MultipartFile file) {
         try {
-            Map<?,?> res = cloudinary.uploader().upload(
-                    file.getBytes(),
-                    ObjectUtils.asMap("folder", folder)
-            );
+            Map<?, ?> res =
+                    cloudinary
+                            .uploader()
+                            .upload(file.getBytes(), ObjectUtils.asMap("folder", folder));
             return (String) res.get("secure_url"); // URL https
         } catch (Exception e) {
             throw new RuntimeException("Upload to Cloudinary failed", e);
         }
     }
-
 }

@@ -1,16 +1,22 @@
 package com.gearx.feature.product.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.gearx.common.response.PageResponse;
 import com.gearx.feature.product.dto.request.ProductRequest;
 import com.gearx.feature.product.dto.response.ProductResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductService {
 
     int create(ProductRequest req);
 
     int update(Integer id, ProductRequest req);
+
+    String uploadMainImage(Long productId, MultipartFile file, Integer userId);
+
+    List<String> uploadGallery(Long productId, List<MultipartFile> files, Integer userId);
 
     ProductResponse findById(Integer id);
 

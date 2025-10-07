@@ -1,4 +1,4 @@
-package com.gearx.common.service;
+package com.gearx.common.base.service;
 
 import java.util.List;
 

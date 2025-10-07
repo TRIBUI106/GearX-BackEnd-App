@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import com.gearx.common.constants.ApiConstants;
 import com.gearx.common.response.ApiResponse;
 import com.gearx.common.response.ResponseHandler;
-import com.gearx.security.configuration.AuthService;
-import com.gearx.security.configuration.PasswordResetService;
 import com.gearx.security.dto.request.*;
 import com.gearx.security.dto.response.TokenResponse;
+import com.gearx.security.service.AuthService;
+import com.gearx.security.service.PasswordResetService;
 
 import lombok.RequiredArgsConstructor;
 

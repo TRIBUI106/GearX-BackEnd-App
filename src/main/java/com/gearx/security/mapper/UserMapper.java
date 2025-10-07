@@ -3,7 +3,7 @@ package com.gearx.security.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.gearx.common.mapper.BaseMapper;
+import com.gearx.common.base.mapper.BaseMapper;
 import com.gearx.security.entity.User;
 
 @Mapper
@@ -19,10 +19,12 @@ public interface UserMapper extends BaseMapper<User> {
 
     int existsByEmail(@Param("email") String email);
 
-    int updatePasswordById(@Param("email") String email, @Param("userId") Integer userId, @Param("password") String hashed);
+    int updatePasswordById(
+            @Param("email") String email,
+            @Param("userId") Integer userId,
+            @Param("password") String hashed);
 
     int deleteUserById(@Param("userId") Integer userId);
 
     int updateUserById(@Param("userId") Integer userId, User user);
-
 }

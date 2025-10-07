@@ -3,10 +3,11 @@ package com.gearx.feature.product.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.gearx.common.response.PageResponse;
 import com.gearx.feature.product.dto.request.ProductRequest;
 import com.gearx.feature.product.dto.response.ProductResponse;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductService {
 

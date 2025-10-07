@@ -1,4 +1,4 @@
-package com.gearx.security.configuration;
+package com.gearx.security.util;
 
 import java.util.Collection;
 import java.util.List;

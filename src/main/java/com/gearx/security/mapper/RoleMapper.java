@@ -17,5 +17,4 @@ public interface RoleMapper {
     int insertUserRole(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
 
     int deleteUserRoles(@Param("userId") Integer userId);
-
 }

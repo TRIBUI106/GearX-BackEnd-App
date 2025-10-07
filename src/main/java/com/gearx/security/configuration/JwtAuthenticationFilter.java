@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.gearx.common.exception.ErrorCode;
 import com.gearx.common.response.ResponseWriter;
 import com.gearx.security.mapper.RevokedTokenMapper;
+import com.gearx.security.service.JwtService;
 
 import lombok.AllArgsConstructor;
 

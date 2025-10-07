@@ -1,4 +1,4 @@
-package com.gearx.security.configuration;
+package com.gearx.security.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.gearx.common.exception.AppException;
 import com.gearx.common.exception.ErrorCode;
-import com.gearx.common.mail.EmailService;
-import com.gearx.common.mail.PasswordResetTemplate;
 import com.gearx.security.entity.User;
+import com.gearx.security.mail.EmailService;
+import com.gearx.security.mail.PasswordResetTemplate;
 import com.gearx.security.mapper.UserMapper;
 
 @Service

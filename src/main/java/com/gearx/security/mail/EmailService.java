@@ -1,4 +1,4 @@
-package com.gearx.common.mail;
+package com.gearx.security.mail;
 
 import java.nio.charset.StandardCharsets;
 

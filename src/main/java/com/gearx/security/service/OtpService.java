@@ -1,4 +1,4 @@
-package com.gearx.security.configuration;
+package com.gearx.security.service;
 
 import java.security.SecureRandom;
 import java.time.Duration;

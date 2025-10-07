@@ -1,24 +1,24 @@
-package com.gearx.security.configuration;
+package com.gearx.security.util;
 
 import java.io.IOException;
 
 import jakarta.servlet.http.*;
 
-import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import com.gearx.common.exception.ErrorCode;
 import com.gearx.common.response.ResponseWriter;
 
 @Component
-public class JsonAccessDeniedHandler implements AccessDeniedHandler {
+public class JsonAuthEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void handle(
+    public void commence(
             HttpServletRequest req,
             HttpServletResponse res,
-            org.springframework.security.access.AccessDeniedException ex)
+            org.springframework.security.core.AuthenticationException ex)
             throws IOException {
         ResponseWriter.writeJsonError(
-                res, ErrorCode.FORBIDDEN, HttpServletResponse.SC_FORBIDDEN, true);
+                res, ErrorCode.UNAUTHORIZED, HttpServletResponse.SC_UNAUTHORIZED, true);
     }
 }

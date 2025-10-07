@@ -1,4 +1,4 @@
-package com.gearx.common.model;
+package com.gearx.common.base.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

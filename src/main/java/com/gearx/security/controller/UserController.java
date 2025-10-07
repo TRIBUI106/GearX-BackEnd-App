@@ -1,6 +1,5 @@
 package com.gearx.security.controller;
 
-import com.gearx.security.entity.User;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -9,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import com.gearx.common.constants.ApiConstants;
 import com.gearx.common.response.ApiResponse;
 import com.gearx.common.response.ResponseHandler;
-import com.gearx.security.configuration.UserService;
 import com.gearx.security.dto.request.RegisterRequest;
-import jakarta.validation.Valid;
+import com.gearx.security.entity.User;
+import com.gearx.security.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,7 +47,8 @@ public class UserController {
     }
 
     @PutMapping(ApiConstants.User.UPDATE)
-    public ResponseEntity<ApiResponse<Object>> updateUser(@Valid @RequestParam int userId, @RequestBody User user) {
+    public ResponseEntity<ApiResponse<Object>> updateUser(
+            @Valid @RequestParam int userId, @RequestBody User user) {
         int updated = userService.updateUserByUserId(userId, user);
         return ResponseHandler.success("Cập nhật thông tin thành công !", updated);
     }

@@ -1,4 +1,4 @@
-package com.gearx.common.mapper;
+package com.gearx.common.base.mapper;
 
 import java.util.List;
 

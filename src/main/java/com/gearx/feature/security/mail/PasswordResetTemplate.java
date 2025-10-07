@@ -62,9 +62,6 @@ public class PasswordResetTemplate {
 		<p style="margin:0 0 8px;font-size:13px;color:#475569;">
 			Không phải bạn yêu cầu? Có thể ai đó đã nhập nhầm email của bạn. Bạn có thể bỏ qua email này.
 		</p>
-		<p style="margin:0 0 0;font-size:13px;color:#475569;">
-			Cần hỗ trợ? <a href="%s" style="color:#2563EB;text-decoration:none;">Liên hệ đội ngũ %s</a>.
-		</p>
 		</td>
 	</tr>
 

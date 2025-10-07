@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gearx.security.mapper.RoleMapper">
+<mapper namespace="com.gearx.feature.security.mapper.RoleMapper">
 
-    <resultMap id="RoleResult" type="com.gearx.security.entity.Role">
+    <resultMap id="RoleResult" type="com.gearx.feature.security.entity.Role">
         <id     column="role_id"    property="roleId"/>
         <result column="role_code"  property="roleCode"/>
         <result column="role_name"  property="roleName"/>

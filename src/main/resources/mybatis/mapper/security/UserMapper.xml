@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gearx.security.mapper.UserMapper">
+<mapper namespace="com.gearx.feature.security.mapper.UserMapper">
 
-    <resultMap id="UserResult" type="com.gearx.security.entity.User">
+    <resultMap id="UserResult" type="com.gearx.feature.security.entity.User">
         <id     property="userId"    column="user_id"/>
         <result property="username"  column="username"/>
         <result property="email"     column="email"/>
@@ -87,7 +87,7 @@
         SELECT EXISTS(SELECT 1 FROM public."user" WHERE user_id = #{id})
     </select>
 
-    <insert id="insert" parameterType="com.gearx.security.entity.User" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
+    <insert id="insert" parameterType="com.gearx.feature.security.entity.User" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
         INSERT INTO public."user" (
         username,
         email,

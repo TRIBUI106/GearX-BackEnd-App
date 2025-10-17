@@ -73,7 +73,7 @@ public class ApiConstants {
     public static final class Cart {
         public static final String BASE = VERSION_V1 + "/cart";
         public static final String ITEMS = "/items";
-        public static final String UPDATE_QTY = "/items/qty";
+        public static final String UPDATE_QTY = "/items/quantity";
         public static final String ITEMS_BY_ID = "/items/{itemId}";
         public static final String CLEAR = "/clear";
         public static final String TOTALS = "/totals";

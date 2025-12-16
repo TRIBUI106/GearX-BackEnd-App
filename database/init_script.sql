@@ -181,6 +181,40 @@ CREATE TABLE public."role" (
 );
 
 
+-- public.product definition
+
+-- Drop table
+
+-- DROP TABLE public.product;
+
+CREATE TABLE public.product (
+	product_id int4 DEFAULT nextval('products_id_seq'::regclass) NOT NULL,
+	"name" varchar(255) NOT NULL,
+	short_description varchar(255) NULL,
+	description text NULL,
+	brand_id int4 NULL,
+	category_id int4 NULL,
+	model varchar(255) NULL,
+	"attributes" jsonb DEFAULT '{}'::jsonb NOT NULL,
+	price numeric(12, 2) NULL,
+	compare_at_price numeric(12, 2) NULL,
+	currency_code bpchar(10) NULL,
+	stock_quantity int4 NULL,
+	warranty_months int2 NULL,
+	main_image_url text NULL,
+	is_active int2 NULL,
+	is_deleted int2 NULL,
+	created_at timestamp NULL,
+	created_by bpchar(100) NULL,
+	updated_at timestamp NULL,
+	updated_by bpchar(100) NULL,
+	image_urls jsonb NULL,
+	CONSTRAINT products_pkey PRIMARY KEY (product_id),
+	CONSTRAINT fk_product_brand FOREIGN KEY (brand_id) REFERENCES public.brand(brand_id),
+	CONSTRAINT fk_product_category FOREIGN KEY (category_id) REFERENCES public.category(category_id)
+);
+
+
 -- public."user" definition
 
 -- Drop table
@@ -202,18 +236,15 @@ CREATE TABLE public."user" (
 	is_active int4 NULL,
 	is_deleted int2 NULL,
 	avatar_url text NULL,
+	"role" int4 DEFAULT 3 NULL,
 	CONSTRAINT users_email_key UNIQUE (email),
 	CONSTRAINT users_pkey PRIMARY KEY (user_id),
-	CONSTRAINT users_username_key UNIQUE (username)
+	CONSTRAINT users_username_key UNIQUE (username),
+	CONSTRAINT user_role_role_id_fk FOREIGN KEY ("role") REFERENCES public."role"(role_id)
 );
 CREATE INDEX idx_users_email ON public."user" USING btree (email);
 
--- Table Triggers
 
-create trigger trg_addroleusercreated after
-insert
-    on
-    public."user" for each row execute function fn_add_role_user_created();
 
 
 -- public.addresses definition
@@ -294,57 +325,6 @@ CREATE TABLE public.payments (
 	CONSTRAINT payments_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id) ON DELETE CASCADE
 );
 CREATE INDEX idx_payments_order_id ON public.payments USING btree (order_id);
-
-
--- public.product definition
-
--- Drop table
-
--- DROP TABLE public.product;
-
-CREATE TABLE public.product (
-	product_id int4 DEFAULT nextval('products_id_seq'::regclass) NOT NULL,
-	"name" varchar(255) NOT NULL,
-	short_description varchar(255) NULL,
-	description text NULL,
-	brand_id int4 NULL,
-	category_id int4 NULL,
-	model varchar(255) NULL,
-	"attributes" jsonb DEFAULT '{}'::jsonb NOT NULL,
-	price numeric(12, 2) NULL,
-	compare_at_price numeric(12, 2) NULL,
-	currency_code bpchar(10) NULL,
-	stock_quantity int4 NULL,
-	warranty_months int2 NULL,
-	main_image_url text NULL,
-	is_active int2 NULL,
-	is_deleted int2 NULL,
-	created_at timestamp NULL,
-	created_by bpchar(100) NULL,
-	updated_at timestamp NULL,
-	updated_by bpchar(100) NULL,
-	image_urls jsonb NULL,
-	CONSTRAINT products_pkey PRIMARY KEY (product_id),
-	CONSTRAINT fk_product_brand FOREIGN KEY (brand_id) REFERENCES public.brand(brand_id),
-	CONSTRAINT fk_product_category FOREIGN KEY (category_id) REFERENCES public.category(category_id)
-);
-
-
--- public.user_role definition
-
--- Drop table
-
--- DROP TABLE public.user_role;
-
-CREATE TABLE public.user_role (
-	user_id int4 NOT NULL,
-	role_id int4 DEFAULT 1 NOT NULL,
-	CONSTRAINT user_role_pkey PRIMARY KEY (user_id, role_id),
-	CONSTRAINT role_user_id FOREIGN KEY (role_id) REFERENCES public."role"(role_id),
-	CONSTRAINT user_role_id FOREIGN KEY (user_id) REFERENCES public."user"(user_id)
-);
-CREATE INDEX fki_role_user_id ON public.user_role USING btree (role_id);
-CREATE INDEX fki_user_role_id ON public.user_role USING btree (user_id);
 
 
 -- public.cart_items definition
@@ -475,19 +455,7 @@ CREATE OR REPLACE FUNCTION public.encrypt_iv(bytea, bytea, bytea, text)
 AS '$libdir/pgcrypto', $function$pg_encrypt_iv$function$
 ;
 
--- DROP FUNCTION public.fn_add_role_user_created();
 
-CREATE OR REPLACE FUNCTION public.fn_add_role_user_created()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
-BEGIN
-    INSERT INTO user_role (user_id, role_id)
-    VALUES (NEW.user_id, 3);
-    RETURN NEW;
-END;
-$function$
-;
 
 -- DROP FUNCTION public.gen_random_bytes(int4);
 

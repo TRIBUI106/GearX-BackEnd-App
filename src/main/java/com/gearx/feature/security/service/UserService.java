@@ -43,12 +43,14 @@ public class UserService {
 
         com.gearx.feature.security.entity.Role role = roleMapper.findByCode("CUSTOMER");
         if (role == null) {
-            // Fallback or error? Assuming CUSTOMER exists or DB default handles it if we don't set it.
-            // But we want to set it explicitly if possible.
-            // If role is null, we can't set it.
-        } else {
-            user.setRole(role);
+            role = roleMapper.findByCode("customer");
         }
+        
+        if (role == null) {
+             throw new AppException(ErrorCode.INTERNAL_ERROR);
+        }
+        
+        user.setRole(role);
 
         int rows = userMapper.insert(user);
 

@@ -14,7 +14,7 @@ public interface RoleMapper {
 
     Role findByCode(@Param("roleCode") String roleCode);
 
-    int insertUserRole(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
+//    int insertUserRole(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
 
-    int deleteUserRoles(@Param("userId") Integer userId);
+//    int deleteUserRoles(@Param("userId") Integer userId);
 }

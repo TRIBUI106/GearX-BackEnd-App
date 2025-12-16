@@ -18,4 +18,5 @@ public class TokenResponse {
     Instant expiresAt; // epoch seconds
     String issuer;
     String username;
+    String role;
 }

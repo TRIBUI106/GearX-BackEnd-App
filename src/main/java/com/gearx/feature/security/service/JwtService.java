@@ -27,7 +27,7 @@ public class JwtService {
         this.expMinutes = expMinutes;
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String username, String role) {
         Instant now = Instant.now();
         Instant exp = now.plusSeconds(expMinutes * 60);
 
@@ -36,7 +36,7 @@ public class JwtService {
                 .setSubject(username)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(exp))
-                .addClaims(java.util.Map.of("username", username))
+                .addClaims(java.util.Map.of("username", username, "role", role))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -57,6 +57,14 @@ public class JwtService {
     public Optional<String> extractUsername(String token) {
         try {
             return Optional.ofNullable(parse(token).getBody().getSubject());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<String> extractRole(String token) {
+        try {
+            return Optional.ofNullable(parse(token).getBody().get("role", String.class));
         } catch (Exception e) {
             return Optional.empty();
         }

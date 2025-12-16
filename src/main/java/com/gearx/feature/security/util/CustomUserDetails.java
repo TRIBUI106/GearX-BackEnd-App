@@ -19,13 +19,8 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (user.getRoles() == null) return List.of();
-        return user.getRoles().stream()
-                .map(
-                        r ->
-                                new org.springframework.security.core.authority
-                                        .SimpleGrantedAuthority("ROLE_" + r.getRoleCode()))
-                .toList();
+        if (user.getRole() == null) return List.of();
+        return List.of(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleCode()));
     }
 
     @Override

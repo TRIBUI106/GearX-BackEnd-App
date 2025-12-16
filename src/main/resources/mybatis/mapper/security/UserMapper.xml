@@ -20,6 +20,11 @@
         <result property="isActive"  column="is_active"/>
         <result property="isDeleted" column="is_deleted"/>
         <result property="avatarUrl" column="avatar_url"/>
+        <association property="role" javaType="com.gearx.feature.security.entity.Role">
+            <id property="roleId" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+            <result property="roleCode" column="role_code"/>
+        </association>
     </resultMap>
 
     <delete id="deleteUserById" parameterType="int">
@@ -40,11 +45,15 @@
         created_by,
         updated_at,
         updated_by,
-        is_active,
-        is_deleted,
-        avatar_url
-        FROM public."user"
-        WHERE username = #{username}
+        u.is_active,
+        u.is_deleted,
+        avatar_url,
+        r.role_id,
+        r.role_name,
+        r.role_code
+        FROM public."user" u
+        LEFT JOIN public."role" r ON u.role = r.role_id
+        WHERE u.username = #{username}
         FETCH FIRST 1 ROWS ONLY
     </select>
 
@@ -61,11 +70,15 @@
         created_by,
         updated_at,
         updated_by,
-        is_active,
-        is_deleted,
-        avatar_url
-        FROM public."user"
-        WHERE email = #{email}
+        u.is_active,
+        u.is_deleted,
+        avatar_url,
+        r.role_id,
+        r.role_name,
+        r.role_code
+        FROM public."user" u
+        LEFT JOIN public."role" r ON u.role = r.role_id
+        WHERE u.email = #{email}
         FETCH FIRST 1 ROWS ONLY
     </select>
 

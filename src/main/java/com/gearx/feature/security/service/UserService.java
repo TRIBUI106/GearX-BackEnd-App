@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserMapper userMapper;
+    private final com.gearx.feature.security.mapper.RoleMapper roleMapper;
     private final PasswordEncoder encoder;
 
     public int register(RegisterRequest req) {
@@ -40,6 +41,15 @@ public class UserService {
                         .isDeleted(req.getIsDeleted() != null ? req.getIsDeleted() : 0)
                         .build();
 
+        com.gearx.feature.security.entity.Role role = roleMapper.findByCode("CUSTOMER");
+        if (role == null) {
+            // Fallback or error? Assuming CUSTOMER exists or DB default handles it if we don't set it.
+            // But we want to set it explicitly if possible.
+            // If role is null, we can't set it.
+        } else {
+            user.setRole(role);
+        }
+
         int rows = userMapper.insert(user);
 
         if (user.getUserId() == null) {
@@ -50,10 +60,6 @@ public class UserService {
         if (user.getUserId() == null) {
             throw new AppException(ErrorCode.INTERNAL_ERROR);
         }
-
-        //          Thay đổi, dùng trigger trong sql
-        //        var role = roleMapper.findByCode("customer");
-        //        roleMapper.insertUserRole(user.getUserId(), role.getRoleId());
 
         return rows;
     }

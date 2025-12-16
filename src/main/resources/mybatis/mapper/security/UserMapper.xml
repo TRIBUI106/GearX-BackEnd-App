@@ -112,7 +112,8 @@
         updated_by,
         is_active,
         is_deleted,
-        avatar_url
+        avatar_url,
+        "role"
         ) VALUES (
         #{username},
         #{email},
@@ -124,7 +125,8 @@
         #{updatedBy},
         #{isActive},
         0,
-        #{avatarUrl}
+        #{avatarUrl},
+        #{role.roleId}
         )
         RETURNING user_id
     </insert>

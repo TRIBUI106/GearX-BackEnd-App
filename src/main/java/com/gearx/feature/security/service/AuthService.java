@@ -31,7 +31,7 @@ public class AuthService {
         // nếu sai sẽ ném AuthenticationException và GlobalExceptionHandler đã map BAD_CREDENTIALS
         
         com.gearx.feature.security.util.CustomUserDetails userDetails = (com.gearx.feature.security.util.CustomUserDetails) auth.getPrincipal();
-        String role = userDetails.getUser().getRole().getRoleCode();
+        String role = userDetails.getUser().getRole() != null ? userDetails.getUser().getRole().getRoleCode() : null;
 
         String token = jwtService.generateToken(req.getUsername(), role);
         Instant issueAt = jwtService.getIssuedAt(token);

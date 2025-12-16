@@ -42,7 +42,8 @@
         updated_by,
         is_active,
         is_deleted,
-        avatar_url
+        avatar_url,
+        role
         FROM public."user"
         WHERE username = #{username}
         FETCH FIRST 1 ROWS ONLY

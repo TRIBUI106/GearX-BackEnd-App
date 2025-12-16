@@ -26,7 +26,7 @@ public class User extends BaseEntity {
     String phone;
     String address;
 
-    java.util.List<Role> roles;
+    Role role;
 
     String avatarUrl;
     String createdBy;

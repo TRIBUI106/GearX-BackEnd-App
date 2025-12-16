@@ -29,8 +29,11 @@ public class AuthService {
                         new UsernamePasswordAuthenticationToken(
                                 req.getUsername(), req.getPassword()));
         // nếu sai sẽ ném AuthenticationException và GlobalExceptionHandler đã map BAD_CREDENTIALS
+        
+        com.gearx.feature.security.util.CustomUserDetails userDetails = (com.gearx.feature.security.util.CustomUserDetails) auth.getPrincipal();
+        String role = userDetails.getUser().getRole() != null ? userDetails.getUser().getRole().getRoleCode() : null;
 
-        String token = jwtService.generateToken(req.getUsername());
+        String token = jwtService.generateToken(req.getUsername(), role);
         Instant issueAt = jwtService.getIssuedAt(token);
         Instant expiration = jwtService.getExpiration(token);
 
@@ -40,6 +43,7 @@ public class AuthService {
                 .expiresAt(expiration)
                 .issuer(jwtService.getIssuer())
                 .username(req.getUsername())
+                .role(role)
                 .build();
     }
 
@@ -77,12 +81,15 @@ public class AuthService {
                         .extractUsername(token)
                         .orElseThrow(() -> new AppException(ErrorCode.UNAUTHORIZED));
 
+        String role = jwtService.extractRole(token).orElse(null);
+
         return TokenResponse.builder()
                 .token(token)
                 .issuedAt(jwtService.getIssuedAt(token))
                 .expiresAt(jwtService.getExpiration(token))
                 .issuer(jwtService.getIssuer())
                 .username(username)
+                .role(role)
                 .build();
     }
 }
